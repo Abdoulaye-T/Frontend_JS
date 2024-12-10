@@ -1,3 +1,5 @@
+// import { ajoutListenersAvis } from "./avis";
+
 // Récupération des pièces depuis le fichier JSON
 const reponse = await fetch('pieces-autos.json');
 const pieces = await reponse.json();
@@ -23,6 +25,10 @@ function genererPieces(pieces){
         descriptionElement.innerText = article.description ?? "Pas de description pour le moment.";
         const stockElement = document.createElement("p");
         stockElement.innerText = article.disponibilite ? "En stock" : "Rupture de stock";
+
+        const avisBouton = document.createElement("button");
+        avisBouton.dataset.id = article.id;
+        avisBouton.textContent = "Afficher les avis";
         
         // On rattache la balise article a la section Fiches
         sectionFiches.appendChild(pieceElement);
@@ -34,24 +40,30 @@ function genererPieces(pieces){
         //Ajout des éléments au DOM pour l'exercice
         pieceElement.appendChild(descriptionElement);
         pieceElement.appendChild(stockElement);
-    
-     }
-}
 
+        pieceElement.appendChild(avisBouton);
+    
+    }
+
+    // Ajout de la fonction ajoutListenersAvis
+    ajoutListenersAvis();
+}
+// Appel de la fonction
 genererPieces(pieces);
 
- //gestion des bouttons 
+ //gestion de bouttons pour le tri par ordre croissant
  const boutonTrier = document.querySelector(".btn-trier");
 
  boutonTrier.addEventListener("click", function () {
      const piecesOrdonnees = Array.from(pieces);
      piecesOrdonnees.sort(function (a, b) {
-         return a.prix - b.prix;
+        return a.prix - b.prix;
       });
       document.querySelector(".fiches").innerHTML = "";
      genererPieces(piecesOrdonnees);
  });
  
+ // Filtrage des produits en fonction de leur prix
  const boutonFiltrer = document.querySelector(".btn-filtrer");
  
  boutonFiltrer.addEventListener("click", function () {
@@ -62,7 +74,7 @@ genererPieces(pieces);
      genererPieces(piecesFiltrees);
  });
 
- //Correction Exercice
+ // Tri par ordre decroissant
 const boutonDecroissant = document.querySelector(".btn-decroissant");
 
 boutonDecroissant.addEventListener("click", function () {
@@ -74,6 +86,7 @@ boutonDecroissant.addEventListener("click", function () {
     genererPieces(piecesOrdonnees);
 });
 
+// Filtrer que les produits en fonction de celle qui ont une description
 const boutonNoDescription = document.querySelector(".btn-nodesc");
 
 boutonNoDescription.addEventListener("click", function () {
@@ -107,7 +120,7 @@ for(let i=0; i < noms.length ; i++){
 // Ajout de l'en-tête puis de la liste au bloc résultats filtres
 document.querySelector('.abordables').appendChild(pElement).appendChild(abordablesElements);
 
-//Code Exercice 
+//Ici on recupère le nom et le prix de tous les produits grace à la méthode map()
 const nomsDisponibles = pieces.map(piece => piece.nom)
 const prixDisponibles = pieces.map(piece => piece.prix)
 

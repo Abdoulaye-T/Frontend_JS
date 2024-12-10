@@ -41,5 +41,14 @@
         "image": "images/balai-essuie-glace.png",
         "description": "Performances d’essuyage au top ! Longueur : 550 mm.",
         "disponibilite": true
+    },
+    {
+        "id": 6,
+        "nom": "Ferrari",
+        "prix": 1000,
+        "categorie": "Voiture de luxe",
+        "image": "images/logo-les-bonnes-pieces.png",
+        "description": "Performances moteur au top ! Distance : 200 km/h.",
+        "disponibilite": true
     }
 ]
